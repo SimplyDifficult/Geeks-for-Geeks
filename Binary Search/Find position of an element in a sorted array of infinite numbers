@@ -1,0 +1,28 @@
+Suppose you have a sorted array of infinite numbers, how would you search an element in the array?
+
+Let low be pointing to 1st element and high pointing to 2nd element of array, Now compare key with high index element,
+->if it is greater than high index element then copy high index in low index and double the high index.
+->if it is smaller, then apply binary search on high and low indices found.
+
+int binarySearch(vector<int>arr,int l,int r,int val){
+	if(r>=l){
+		int mid=(l+r)/2;
+		if(arr[mid]==val)
+			return mid;
+		else if(arr[mid]>val)
+			return binarySearch(arr,l,mid-1,val);
+		return binarySearch(arr,mid+1,r,val);
+	}
+	return -1;
+}
+
+int find(vector<int>arr,int key){
+	int l=0,r=1;
+	int val=arr[0];
+	while(key>val){
+		l=r;
+		r*=2;
+		val=arr[r];
+	}
+	return binarySearch(arr,l,r,key);
+}
