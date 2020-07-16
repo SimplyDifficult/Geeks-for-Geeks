@@ -1,0 +1,48 @@
+There are Infinite People Standing in a row, indexed from 1.
+A person having index 'i' has strength of (i*i).
+You have Strength 'P'. You need to tell what is the maximum number of People You can Kill With your Strength P.
+You can only Kill a person with strength 'X' if P >= 'X'  and after killing him, Your Strength decreases by 'X'.
+
+
+#include <iostream>
+#include <bits/stdc++.h> 
+
+using namespace std;
+
+long long sum(long long n){
+    return (n*(n+1)*((2*n)+1))/6;
+}
+
+long long binarySearch(int start,int end,long long val){
+    if(start>end)return -1;
+    //if(start==end)return start;
+    long long mid=(start+end)/2;
+    if(val==sum(mid))return mid;
+    else if(val<sum(mid))return binarySearch(start,mid-1,val);
+    else{
+        if(sum(mid+1)>val)return mid;
+        else return binarySearch(mid+1,end,val);
+    }
+}
+
+int main() {
+	int t;
+	cin>>t;
+	while(t--){
+	    long long p;
+	    cin>>p;
+	    if(p==0){
+	        cout<<0<<endl;
+	    }
+	    else{
+	        int low=0,high=1;
+	        while(p>=sum(high)){
+	            low=high;
+	            high=high*2;
+	        }
+	        int ans=binarySearch(low,high,p);
+	        cout<<ans<<endl;
+	    }
+	}
+	return 0;
+}
