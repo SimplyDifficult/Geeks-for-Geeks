@@ -1,0 +1,42 @@
+ Use binary search for all the numbers in the range and get the first number with n trailing zeros.
+ 
+ 
+ #include <iostream>
+using namespace std;
+
+int low,high;
+
+int trailingZeros(int n){
+    int count=0;
+    while(n>0){
+        n/=5;
+        count+=n;
+    }
+    return count;
+}
+
+int binarySearch(int n){
+    low=0,high=1e6;
+    while(low<high){
+        int mid=(low+high)/2;
+        if(trailingZeros(mid)<n) low=mid+1;
+        else high=mid;
+    }
+    return low;
+}
+
+int main() {
+	int t;
+	cin>>t;
+	while(t--){
+	    int n;
+	    cin>>n;
+	    binarySearch(n);
+	    while(trailingZeros(low)==n){
+	        cout<<low<<" ";
+	        low++;
+	    }
+	    cout<<endl;
+	}
+	return 0;
+}
